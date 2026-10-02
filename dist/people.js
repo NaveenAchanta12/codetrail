@@ -1,0 +1,1 @@
+(()=>{document.title='CodeTrail — Find learners';document.getElementById('breadcrumb').textContent='LEARNER DIRECTORY';document.getElementById('hub-account').textContent='Sign out ↗';document.getElementById('hub-account').href='/signout-with-chatgpt?return_to=%2F';window.LearnerFeatures.directory(document.getElementById('hub-content'));})();

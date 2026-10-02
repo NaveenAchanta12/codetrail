@@ -1,0 +1,614 @@
+[
+  {
+    "id": "variables",
+    "title": "Variables & Types",
+    "level": "Foundation",
+    "summary": "Name values, calculate results, and print your first answer.",
+    "lesson": "A variable is a name attached to a value. Start by naming each piece of information your program needs, then write an expression that combines those values. Python determines a value’s type at runtime; Java asks you to declare a variable’s type, such as int for whole numbers. Both languages support addition, subtraction, multiplication, and parentheses. Choose descriptive names like packs rather than mysterious letters. An assignment stores a result; it does not create a permanent mathematical equation. If a value changes later, an earlier calculation is not automatically repeated. In these examples, sample data is written directly in the program so you can run it immediately. Change one number, predict the new output, and run the code again. That prediction-and-check habit is the foundation of debugging.",
+    "python": "packs = 4\nper_pack = 6\ngiven = 5\nremaining = packs * per_pack - given\nprint(remaining)",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        int packs = 4;\n        int perPack = 6;\n        int given = 5;\n        int remaining = packs * perPack - given;\n        System.out.println(remaining);\n    }\n}",
+    "problem": {
+      "title": "Sticker inventory",
+      "prompt": "A club has 4 packs with 6 stickers in each pack. It gives away 5 stickers. Calculate and print the number left.",
+      "input": "packs = 4, per_pack = 6, given = 5",
+      "output": "19",
+      "hints": [
+        "Calculate the total before the giveaway.",
+        "Multiplication happens before subtraction.",
+        "Store the remaining count, then print it."
+      ],
+      "python": "packs = 4\nper_pack = 6\ngiven = 5\nremaining = packs * per_pack - given\nprint(remaining)",
+      "java": "public class Main {\n    public static void main(String[] args) {\n        int packs = 4;\n        int perPack = 6;\n        int given = 5;\n        int remaining = packs * perPack - given;\n        System.out.println(remaining);\n    }\n}",
+      "explanation": "Four packs contain 24 stickers. Giving away five leaves 19. The arithmetic takes constant time and constant extra space.",
+      "quiz": {
+        "question": "What does assignment do?",
+        "choices": [
+          "Stores a value under a name",
+          "Repeats a calculation forever",
+          "Always prints a result",
+          "Compares two values"
+        ],
+        "answer": 0,
+        "explanation": "Assignment stores a value. Printing and comparison are separate operations."
+      }
+    }
+  },
+  {
+    "id": "conditions",
+    "title": "Conditions",
+    "level": "Foundation",
+    "summary": "Choose which instruction runs using Boolean tests.",
+    "lesson": "Programs become useful when they can make decisions. A condition is an expression that evaluates to true or false, such as score >= 10. An if statement runs its block only when its condition is true. An else block provides a fallback, and an additional elif in Python or else if in Java handles another possibility. Branches are checked from top to bottom, so their order matters when ranges overlap. Python uses indentation to define blocks; Java uses braces. Use == to compare values and = to assign them. Boundary values deserve special attention: testing 9, 10, and 11 often reveals a mistake in a threshold rule. Before coding, describe the rule in plain language and decide whether the boundary belongs in the first or second branch.",
+    "python": "order_total = 26\nif order_total >= 30:\n    fee = 0\nelse:\n    fee = 4\nprint(fee)",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        int orderTotal = 26;\n        int fee;\n        if (orderTotal >= 30) {\n            fee = 0;\n        } else {\n            fee = 4;\n        }\n        System.out.println(fee);\n    }\n}",
+    "problem": {
+      "title": "Club delivery fee",
+      "prompt": "Orders costing at least 30 credits receive free delivery. All smaller orders pay 4 credits. Print the fee for an order costing 26 credits.",
+      "input": "order_total = 26",
+      "output": "4",
+      "hints": [
+        "Compare the total with 30.",
+        "Use >= so exactly 30 also qualifies.",
+        "Print only the fee, not the order total."
+      ],
+      "python": "order_total = 26\nif order_total >= 30:\n    fee = 0\nelse:\n    fee = 4\nprint(fee)",
+      "java": "public class Main {\n    public static void main(String[] args) {\n        int orderTotal = 26;\n        int fee;\n        if (orderTotal >= 30) {\n            fee = 0;\n        } else {\n            fee = 4;\n        }\n        System.out.println(fee);\n    }\n}",
+      "explanation": "Because 26 is below 30, the fallback branch assigns a fee of 4. Time and extra space are O(1).",
+      "quiz": {
+        "question": "Which order total first receives free delivery?",
+        "choices": [
+          "26",
+          "29",
+          "30",
+          "31"
+        ],
+        "answer": 2,
+        "explanation": "The condition includes 30 because it uses greater than or equal to."
+      }
+    }
+  },
+  {
+    "id": "loops",
+    "title": "Loops",
+    "level": "Foundation",
+    "summary": "Repeat a small step while tracking an accumulator.",
+    "lesson": "A loop repeats instructions without requiring you to copy them. A for loop is useful when you know which values to visit. Python’s range(start, stop) includes start but excludes stop, while a Java for loop states its initialization, continuation condition, and update explicitly. A common loop pattern is an accumulator: begin with a neutral value such as zero, then add each contribution. Keep the accumulator outside the loop so that it survives between iterations. Trace a small example by recording the loop variable and running total after every step. Pay attention to the final value that should be visited; off-by-one mistakes often come from an exclusive endpoint. A loop that visits n values and performs constant work per value usually takes O(n) time.",
+    "python": "days = 5\ntotal = 0\nfor day in range(1, days + 1):\n    total += day\nprint(total)",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        int days = 5;\n        int total = 0;\n        for (int day = 1; day <= days; day++) {\n            total += day;\n        }\n        System.out.println(total);\n    }\n}",
+    "problem": {
+      "title": "Staircase tokens",
+      "prompt": "On day d, a game awards d tokens. Calculate the total tokens earned on days 1 through 5, including both endpoints.",
+      "input": "days = 5",
+      "output": "15",
+      "hints": [
+        "Start the total at zero.",
+        "Visit each day from 1 through days.",
+        "Add the current day to the running total."
+      ],
+      "python": "days = 5\ntotal = 0\nfor day in range(1, days + 1):\n    total += day\nprint(total)",
+      "java": "public class Main {\n    public static void main(String[] args) {\n        int days = 5;\n        int total = 0;\n        for (int day = 1; day <= days; day++) {\n            total += day;\n        }\n        System.out.println(total);\n    }\n}",
+      "explanation": "The accumulator becomes 1, 3, 6, 10, then 15. The loop uses O(days) time and O(1) extra space.",
+      "quiz": {
+        "question": "Which Python range visits 1 through 5?",
+        "choices": [
+          "range(1, 5)",
+          "range(5)",
+          "range(1, 6)",
+          "range(0, 4)"
+        ],
+        "answer": 2,
+        "explanation": "The stop value is excluded, so use 6 to include 5."
+      }
+    }
+  },
+  {
+    "id": "functions",
+    "title": "Functions",
+    "level": "Foundation",
+    "summary": "Package a calculation into a reusable named operation.",
+    "lesson": "A function groups instructions behind a name. Parameters are the inputs a caller supplies, and a return value is the result the caller receives. Separating a calculation from printing makes that calculation easier to reuse and test. Python defines functions with def; Java places methods inside a class and declares their parameter and return types. The static methods here can be called directly from main without creating an object. Local variables belong to a particular call, so one call’s temporary values do not leak into another. Start with a function that has one clear responsibility and give it a name describing that responsibility. To test it, try a typical case, a small boundary case, and another independent call. Distinguish returning a value from displaying that value: they serve different purposes.",
+    "python": "def perimeter(width, height):\n    return 2 * (width + height)\n\nprint(perimeter(7, 3))",
+    "java": "public class Main {\n    static int perimeter(int width, int height) {\n        return 2 * (width + height);\n    }\n    public static void main(String[] args) {\n        System.out.println(perimeter(7, 3));\n    }\n}",
+    "problem": {
+      "title": "Frame border length",
+      "prompt": "Write a function that returns the perimeter of a rectangle with positive whole-number width and height. Print its result for width 7 and height 3.",
+      "input": "width = 7, height = 3",
+      "output": "20",
+      "hints": [
+        "A rectangle has two widths and two heights.",
+        "Return 2 * (width + height).",
+        "Call the function from the printing code."
+      ],
+      "python": "def perimeter(width, height):\n    return 2 * (width + height)\n\nprint(perimeter(7, 3))",
+      "java": "public class Main {\n    static int perimeter(int width, int height) {\n        return 2 * (width + height);\n    }\n    public static void main(String[] args) {\n        System.out.println(perimeter(7, 3));\n    }\n}",
+      "explanation": "The function returns twice the sum of 7 and 3, which is 20. It uses O(1) time and extra space.",
+      "quiz": {
+        "question": "Why return a result instead of only printing it?",
+        "choices": [
+          "Returning always runs faster",
+          "The caller can use the result in another calculation",
+          "Returning automatically saves a file",
+          "Printing is forbidden inside functions"
+        ],
+        "answer": 1,
+        "explanation": "A return value can be assigned, combined, tested, or printed by the caller."
+      }
+    }
+  },
+  {
+    "id": "arrays",
+    "title": "Lists & Arrays",
+    "level": "Foundation",
+    "summary": "Visit a sequence and retain only the information you need.",
+    "lesson": "A sequence stores multiple values in a defined order. Python lists can grow and contain different kinds of objects; Java arrays have a fixed length and one declared element type. Both examples use whole numbers and zero-based indexing, meaning the first element has index zero. Accessing a valid index retrieves a value directly. When every element matters, a for-each loop is often clearer than managing indexes yourself. Many sequence problems reduce to a running count, total, minimum, or maximum. Decide what state you need before writing the loop. Avoid modifying a collection while traversing it unless the algorithm specifically supports that change. An empty sequence is also worth testing: a count or sum naturally stays zero, but a maximum needs an explicit empty-input policy.",
+    "python": "sessions = [8, 12, 10, 15, 7]\ntarget = 10\ncount = 0\nfor value in sessions:\n    if value > target:\n        count += 1\nprint(count)",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        int[] sessions = {8, 12, 10, 15, 7};\n        int target = 10;\n        int count = 0;\n        for (int value : sessions) {\n            if (value > target) count++;\n        }\n        System.out.println(count);\n    }\n}",
+    "problem": {
+      "title": "Above-target sessions",
+      "prompt": "Count how many values in a sequence are strictly greater than the target. For this sample, use sessions [8, 12, 10, 15, 7] and target 10.",
+      "input": "sessions = [8, 12, 10, 15, 7], target = 10",
+      "output": "2",
+      "hints": [
+        "Start a counter at zero.",
+        "Inspect every value once.",
+        "Strictly greater excludes values equal to the target."
+      ],
+      "python": "sessions = [8, 12, 10, 15, 7]\ntarget = 10\ncount = 0\nfor value in sessions:\n    if value > target:\n        count += 1\nprint(count)",
+      "java": "public class Main {\n    public static void main(String[] args) {\n        int[] sessions = {8, 12, 10, 15, 7};\n        int target = 10;\n        int count = 0;\n        for (int value : sessions) {\n            if (value > target) count++;\n        }\n        System.out.println(count);\n    }\n}",
+      "explanation": "Only 12 and 15 exceed 10. Every element is examined once: O(n) time and O(1) extra space.",
+      "quiz": {
+        "question": "What is the index of the first element?",
+        "choices": [
+          "-1",
+          "0",
+          "1",
+          "The sequence length"
+        ],
+        "answer": 1,
+        "explanation": "Python lists and Java arrays both use zero-based indexing."
+      }
+    }
+  },
+  {
+    "id": "strings",
+    "title": "Strings",
+    "level": "Foundation",
+    "summary": "Process text character by character.",
+    "lesson": "A string is an ordered sequence of text. Like a list or array, it can be traversed and indexed, but strings in Python and Java are immutable: an operation creates a new string rather than changing the original string’s characters. For basic text problems, decide whether case, spaces, and punctuation matter. Normalizing letter case before comparison can simplify the rest of an algorithm. The examples here deliberately use ASCII letters so Python characters and Java char values behave as expected; full Unicode text can require more careful handling. Counting particular characters needs only a small accumulator. Building a long result by repeatedly concatenating strings may be inefficient, so later problems can use a list of pieces in Python or StringBuilder in Java. Always specify how an empty string should behave.",
+    "python": "text = 'Open trail'\ncount = 0\nfor char in text.lower():\n    if char in 'aeiou':\n        count += 1\nprint(count)",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        String text = \"Open trail\";\n        int count = 0;\n        for (char raw : text.toCharArray()) {\n            char c = Character.toLowerCase(raw);\n            if (\"aeiou\".indexOf(c) >= 0) count++;\n        }\n        System.out.println(count);\n    }\n}",
+    "problem": {
+      "title": "Vowel counter",
+      "prompt": "Count the English vowels a, e, i, o, and u in an ASCII string, ignoring letter case. Print the count for \"Open trail\".",
+      "input": "text = \"Open trail\"",
+      "output": "4",
+      "hints": [
+        "Convert each character to lowercase, or lowercase the text.",
+        "Check membership in the five vowel letters.",
+        "Spaces and consonants do not increase the counter."
+      ],
+      "python": "text = 'Open trail'\ncount = 0\nfor char in text.lower():\n    if char in 'aeiou':\n        count += 1\nprint(count)",
+      "java": "public class Main {\n    public static void main(String[] args) {\n        String text = \"Open trail\";\n        int count = 0;\n        for (char raw : text.toCharArray()) {\n            char c = Character.toLowerCase(raw);\n            if (\"aeiou\".indexOf(c) >= 0) count++;\n        }\n        System.out.println(count);\n    }\n}",
+      "explanation": "The vowels are O, e, a, and i. Time is O(n). These versions create a lowercase string or character array, so their extra space is O(n).",
+      "quiz": {
+        "question": "Why normalize letter case?",
+        "choices": [
+          "To remove all spaces",
+          "To make O and o match the same vowel rule",
+          "To sort the letters",
+          "To change vowels into consonants"
+        ],
+        "answer": 1,
+        "explanation": "Case normalization lets one membership test handle uppercase and lowercase letters."
+      }
+    }
+  },
+  {
+    "id": "maps-sets",
+    "title": "Maps & Sets",
+    "level": "Core",
+    "summary": "Track membership and associate keys with values.",
+    "lesson": "A set stores distinct values and answers membership questions. A map associates each key with a value, such as a word with its frequency. Python provides set and dict; Java provides HashSet and HashMap. These hash-based collections support expected constant-time lookup and insertion, although worst-case behavior and implementation details can differ. Use a set when you only need to know whether something has appeared. Use a map when you also need information about that thing. Before each iteration, describe what your collection represents: for duplicate detection, it contains exactly the values already visited. That statement is an invariant, a rule that remains true as the loop advances. Sets do not preserve meaningful sorted order, so do not depend on their printed ordering when checking a solution.",
+    "python": "def first_repeat(codes):\n    seen = set()\n    for code in codes:\n        if code in seen:\n            return code\n        seen.add(code)\n    return -1\n\nprint(first_repeat([4, 7, 4, 7, 9]))",
+    "java": "public class Main {\n    static int firstRepeat(int[] codes) {\n        java.util.Set<Integer> seen = new java.util.HashSet<>();\n        for (int code : codes) {\n            if (seen.contains(code)) return code;\n            seen.add(code);\n        }\n        return -1;\n    }\n    public static void main(String[] args) {\n        System.out.println(firstRepeat(new int[]{4, 7, 4, 7, 9}));\n    }\n}",
+    "problem": {
+      "title": "First repeated code",
+      "prompt": "Scan integer codes from left to right. Return the first code whose value has already appeared. Return -1 if there is no repeat. All input codes are nonnegative.",
+      "input": "codes = [4, 7, 4, 7, 9]",
+      "output": "4",
+      "hints": [
+        "Keep a set of values already visited.",
+        "Check membership before inserting the current value.",
+        "Return immediately when you find a repeat."
+      ],
+      "python": "def first_repeat(codes):\n    seen = set()\n    for code in codes:\n        if code in seen:\n            return code\n        seen.add(code)\n    return -1\n\nprint(first_repeat([4, 7, 4, 7, 9]))",
+      "java": "public class Main {\n    static int firstRepeat(int[] codes) {\n        java.util.Set<Integer> seen = new java.util.HashSet<>();\n        for (int code : codes) {\n            if (seen.contains(code)) return code;\n            seen.add(code);\n        }\n        return -1;\n    }\n    public static void main(String[] args) {\n        System.out.println(firstRepeat(new int[]{4, 7, 4, 7, 9}));\n    }\n}",
+      "explanation": "The third code, 4, is the first value already in the set. Expected time is O(n), with O(n) extra space.",
+      "quiz": {
+        "question": "Which collection best stores a count for each word?",
+        "choices": [
+          "A Boolean",
+          "A set alone",
+          "A map from word to count",
+          "One integer"
+        ],
+        "answer": 2,
+        "explanation": "A map connects each distinct word to its associated frequency."
+      }
+    }
+  },
+  {
+    "id": "complexity",
+    "title": "Time & Space Complexity",
+    "level": "Core",
+    "summary": "Describe how resource use grows as inputs grow.",
+    "lesson": "Complexity describes growth rather than exact seconds. If an algorithm checks each of n elements once, its time is O(n). A fixed number of operations is O(1), while a loop that repeatedly halves a search range often gives O(log n). Two nested loops are not automatically quadratic; inspect how many total iterations occur. When each visits all n elements, the work is O(n²). Big O suppresses constant factors and smaller terms, helping compare behavior for large inputs. Space complexity measures additional storage, with input and output conventions stated when relevant. A loop can do linear work while retaining only a few variables. Practice counting operations on tiny inputs before writing a complexity label, and keep best-case, worst-case, and expected behavior distinct.",
+    "python": "n = 4\npairs = 0\nfor i in range(n):\n    for j in range(i + 1, n):\n        pairs += 1\nprint(pairs)",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        int n = 4;\n        int pairs = 0;\n        for (int i = 0; i < n; i++) {\n            for (int j = i + 1; j < n; j++) {\n                pairs++;\n            }\n        }\n        System.out.println(pairs);\n    }\n}",
+    "problem": {
+      "title": "Unique pair count",
+      "prompt": "Count how many index pairs (i, j) satisfy 0 <= i < j < n, using two loops. Print the count for n = 4.",
+      "input": "n = 4",
+      "output": "6",
+      "hints": [
+        "The second index starts one position after the first.",
+        "Never pair an index with itself.",
+        "Count each pair only once."
+      ],
+      "python": "n = 4\npairs = 0\nfor i in range(n):\n    for j in range(i + 1, n):\n        pairs += 1\nprint(pairs)",
+      "java": "public class Main {\n    public static void main(String[] args) {\n        int n = 4;\n        int pairs = 0;\n        for (int i = 0; i < n; i++) {\n            for (int j = i + 1; j < n; j++) {\n                pairs++;\n            }\n        }\n        System.out.println(pairs);\n    }\n}",
+      "explanation": "The inner loop runs 3 + 2 + 1 + 0 times. In general, n(n-1)/2 pairs give O(n²) time and O(1) extra space. For very large n, use a sufficiently wide numeric type.",
+      "quiz": {
+        "question": "What is the time complexity of this pair-counting loop?",
+        "choices": [
+          "O(1)",
+          "O(log n)",
+          "O(n)",
+          "O(n²)"
+        ],
+        "answer": 3,
+        "explanation": "The total iterations grow as n(n-1)/2; the quadratic term determines the growth."
+      }
+    }
+  },
+  {
+    "id": "searching",
+    "title": "Binary Search",
+    "level": "Core",
+    "summary": "Search a sorted sequence by eliminating half the candidates.",
+    "lesson": "Linear search checks candidates one at a time and works on unsorted input. Binary search is faster on a sorted sequence because a middle value tells you which half cannot contain the target. Keep low and high boundaries around the remaining candidate interval. Compare the middle value with the target, then move a boundary past the middle so the interval strictly shrinks. If low becomes greater than high, the target is absent. State whether your boundaries are inclusive before coding, and use that convention consistently. Java can compute the midpoint as low + (high - low) / 2 to avoid adding two potentially large indexes. Binary search takes O(log n) comparisons and an iterative implementation needs O(1) extra space. Sorting first costs additional work and may change original indexes.",
+    "python": "def find_index(values, target):\n    low, high = 0, len(values) - 1\n    while low <= high:\n        mid = low + (high - low) // 2\n        if values[mid] == target:\n            return mid\n        if values[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1\n\nprint(find_index([2, 5, 8, 12, 19], 12))",
+    "java": "public class Main {\n    static int findIndex(int[] values, int target) {\n        int low = 0, high = values.length - 1;\n        while (low <= high) {\n            int mid = low + (high - low) / 2;\n            if (values[mid] == target) return mid;\n            if (values[mid] < target) low = mid + 1;\n            else high = mid - 1;\n        }\n        return -1;\n    }\n    public static void main(String[] args) {\n        System.out.println(findIndex(new int[]{2, 5, 8, 12, 19}, 12));\n    }\n}",
+    "problem": {
+      "title": "Find the shelf marker",
+      "prompt": "Given a sorted ascending array of distinct integers, return the zero-based index of the target or -1 if absent. Use binary search.",
+      "input": "markers = [2, 5, 8, 12, 19], target = 12",
+      "output": "3",
+      "hints": [
+        "Keep inclusive low and high indexes.",
+        "If the middle value is too small, move low to mid + 1.",
+        "Stop when the interval is empty."
+      ],
+      "python": "def find_index(values, target):\n    low, high = 0, len(values) - 1\n    while low <= high:\n        mid = low + (high - low) // 2\n        if values[mid] == target:\n            return mid\n        if values[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1\n\nprint(find_index([2, 5, 8, 12, 19], 12))",
+      "java": "public class Main {\n    static int findIndex(int[] values, int target) {\n        int low = 0, high = values.length - 1;\n        while (low <= high) {\n            int mid = low + (high - low) / 2;\n            if (values[mid] == target) return mid;\n            if (values[mid] < target) low = mid + 1;\n            else high = mid - 1;\n        }\n        return -1;\n    }\n    public static void main(String[] args) {\n        System.out.println(findIndex(new int[]{2, 5, 8, 12, 19}, 12));\n    }\n}",
+      "explanation": "The first middle value is 8, so discard it and everything before it. The next middle value is 12 at index 3. Time is O(log n), extra space O(1).",
+      "quiz": {
+        "question": "What must be true before this binary search runs?",
+        "choices": [
+          "All values must be positive",
+          "The array must be sorted",
+          "The length must be even",
+          "The target must exist"
+        ],
+        "answer": 1,
+        "explanation": "Ordering makes it safe to discard an entire half after one comparison."
+      }
+    }
+  },
+  {
+    "id": "sorting",
+    "title": "Insertion Sort",
+    "level": "Core",
+    "summary": "Build an ordered prefix one element at a time.",
+    "lesson": "Sorting rearranges values into an order, usually ascending or descending. Insertion sort builds a sorted prefix, then inserts each next element into its proper position. Save the current value before shifting larger values one position to the right, or you may overwrite the value you intended to insert. The invariant is that everything before the current index is already sorted. This algorithm is useful for learning array movement and performs well on small or nearly sorted inputs. In the worst case, each insertion shifts many earlier elements, producing O(n²) time. On already sorted input it takes O(n) time. It sorts in place with O(1) auxiliary space. Using a strict greater-than comparison preserves the order of equal elements, which makes this version stable.",
+    "python": "scores = [9, 3, 6, 3, 1]\nfor i in range(1, len(scores)):\n    key = scores[i]\n    j = i - 1\n    while j >= 0 and scores[j] > key:\n        scores[j + 1] = scores[j]\n        j -= 1\n    scores[j + 1] = key\nprint(*scores)",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        int[] scores = {9, 3, 6, 3, 1};\n        for (int i = 1; i < scores.length; i++) {\n            int key = scores[i], j = i - 1;\n            while (j >= 0 && scores[j] > key) {\n                scores[j + 1] = scores[j];\n                j--;\n            }\n            scores[j + 1] = key;\n        }\n        for (int i = 0; i < scores.length; i++) {\n            if (i > 0) System.out.print(\" \");\n            System.out.print(scores[i]);\n        }\n        System.out.println();\n    }\n}",
+    "problem": {
+      "title": "Order the sample scores",
+      "prompt": "Sort [9, 3, 6, 3, 1] into ascending order using insertion sort. Print the values separated by single spaces.",
+      "input": "scores = [9, 3, 6, 3, 1]",
+      "output": "1 3 3 6 9",
+      "hints": [
+        "Begin with the second element.",
+        "Shift preceding values that are larger than the saved value.",
+        "Place the saved value in the gap."
+      ],
+      "python": "scores = [9, 3, 6, 3, 1]\nfor i in range(1, len(scores)):\n    key = scores[i]\n    j = i - 1\n    while j >= 0 and scores[j] > key:\n        scores[j + 1] = scores[j]\n        j -= 1\n    scores[j + 1] = key\nprint(*scores)",
+      "java": "public class Main {\n    public static void main(String[] args) {\n        int[] scores = {9, 3, 6, 3, 1};\n        for (int i = 1; i < scores.length; i++) {\n            int key = scores[i], j = i - 1;\n            while (j >= 0 && scores[j] > key) {\n                scores[j + 1] = scores[j];\n                j--;\n            }\n            scores[j + 1] = key;\n        }\n        for (int i = 0; i < scores.length; i++) {\n            if (i > 0) System.out.print(\" \");\n            System.out.print(scores[i]);\n        }\n        System.out.println();\n    }\n}",
+      "explanation": "Insert 3 before 9, then 6 between them, then the second 3 after the first, and finally 1 at the front. Worst-case time is O(n²), auxiliary space O(1).",
+      "quiz": {
+        "question": "Why save key before shifting elements?",
+        "choices": [
+          "To convert it to text",
+          "To preserve the value being inserted",
+          "To remove duplicate values",
+          "To avoid using a loop"
+        ],
+        "answer": 1,
+        "explanation": "Shifting overwrites positions, so a saved copy protects the current insertion value."
+      }
+    }
+  },
+  {
+    "id": "stacks-queues",
+    "title": "Stacks & Queues",
+    "level": "Core",
+    "summary": "Choose last-in-first-out or first-in-first-out processing.",
+    "lesson": "A stack removes the most recently added item first: last in, first out. A queue removes the oldest item first: first in, first out. Stacks model nested work, undo histories, and matching delimiters. Queues model waiting lines and breadth-first exploration. Python lists support efficient stack operations with append and pop; collections.deque supports efficient queue operations. Java’s ArrayDeque can serve either role. Avoid removing the first element of a Python list repeatedly, because shifting the remaining elements costs linear time. For parentheses, a stack records openings that have not yet been matched. Each closing parenthesis must consume a previous opening, and the stack must be empty at the end. Check an empty input and an unexpected early closing parenthesis, not only ordinary balanced cases.",
+    "python": "def balanced(text):\n    stack = []\n    for char in text:\n        if char == '(':\n            stack.append(char)\n        elif not stack:\n            return False\n        else:\n            stack.pop()\n    return not stack\n\nprint(str(balanced('(()())')).lower())",
+    "java": "public class Main {\n    static boolean balanced(String text) {\n        java.util.Deque<Character> stack = new java.util.ArrayDeque<>();\n        for (char c : text.toCharArray()) {\n            if (c == '(') stack.push(c);\n            else if (stack.isEmpty()) return false;\n            else stack.pop();\n        }\n        return stack.isEmpty();\n    }\n    public static void main(String[] args) {\n        System.out.println(balanced(\"(()())\"));\n    }\n}",
+    "problem": {
+      "title": "Balanced parentheses",
+      "prompt": "Given a string containing only ( and ), print true if every opening parenthesis has a correctly ordered closing partner, otherwise print false. The empty string is balanced.",
+      "input": "text = \"(()())\"",
+      "output": "true",
+      "hints": [
+        "Push an opening parenthesis.",
+        "A closing parenthesis requires a nonempty stack.",
+        "After scanning, no opening parentheses may remain."
+      ],
+      "python": "def balanced(text):\n    stack = []\n    for char in text:\n        if char == '(':\n            stack.append(char)\n        elif not stack:\n            return False\n        else:\n            stack.pop()\n    return not stack\n\nprint(str(balanced('(()())')).lower())",
+      "java": "public class Main {\n    static boolean balanced(String text) {\n        java.util.Deque<Character> stack = new java.util.ArrayDeque<>();\n        for (char c : text.toCharArray()) {\n            if (c == '(') stack.push(c);\n            else if (stack.isEmpty()) return false;\n            else stack.pop();\n        }\n        return stack.isEmpty();\n    }\n    public static void main(String[] args) {\n        System.out.println(balanced(\"(()())\"));\n    }\n}",
+      "explanation": "Every closing parenthesis pops a corresponding unmatched opening. The stack ends empty, so the answer is true. Time O(n), worst-case extra space O(n).",
+      "quiz": {
+        "question": "Which removal order describes a stack?",
+        "choices": [
+          "Smallest value first",
+          "First in, first out",
+          "Last in, first out",
+          "Random order"
+        ],
+        "answer": 2,
+        "explanation": "A stack pops its most recently pushed item."
+      }
+    }
+  },
+  {
+    "id": "linked-lists",
+    "title": "Linked Lists",
+    "level": "Core",
+    "summary": "Follow references between nodes instead of array indexes.",
+    "lesson": "A linked list stores values in nodes, with each node holding a reference to the next node. The head points to the first node, and a null reference marks the end. Python uses None for that missing reference; Java uses null. Unlike an array, a linked list does not provide constant-time access to an arbitrary position: reaching an element requires following links from the head. Traversal keeps a current-node reference and advances it after processing the value. Forgetting that advance creates an infinite loop. Inserting after a known node can be constant time, but finding that node may still take linear time. Begin with an acyclic singly linked list, test the empty-list case, and avoid changing the head just to walk through the structure.",
+    "python": "class Node:\n    def __init__(self, value, next_node=None):\n        self.value = value\n        self.next = next_node\n\nhead = Node(5, Node(2, Node(8)))\ncurrent = head\ntotal = 0\nwhile current is not None:\n    total += current.value\n    current = current.next\nprint(total)",
+    "java": "public class Main {\n    static class Node {\n        int value;\n        Node next;\n        Node(int value, Node next) {\n            this.value = value;\n            this.next = next;\n        }\n    }\n    public static void main(String[] args) {\n        Node head = new Node(5, new Node(2, new Node(8, null)));\n        Node current = head;\n        int total = 0;\n        while (current != null) {\n            total += current.value;\n            current = current.next;\n        }\n        System.out.println(total);\n    }\n}",
+    "problem": {
+      "title": "Sum a chain",
+      "prompt": "Create an acyclic singly linked list containing 5 -> 2 -> 8. Traverse the list and print the sum of its values. An empty list should sum to zero.",
+      "input": "head = 5 -> 2 -> 8",
+      "output": "15",
+      "hints": [
+        "Each node needs a value and a next reference.",
+        "Use a separate current reference for traversal.",
+        "Stop when current is None or null."
+      ],
+      "python": "class Node:\n    def __init__(self, value, next_node=None):\n        self.value = value\n        self.next = next_node\n\nhead = Node(5, Node(2, Node(8)))\ncurrent = head\ntotal = 0\nwhile current is not None:\n    total += current.value\n    current = current.next\nprint(total)",
+      "java": "public class Main {\n    static class Node {\n        int value;\n        Node next;\n        Node(int value, Node next) {\n            this.value = value;\n            this.next = next;\n        }\n    }\n    public static void main(String[] args) {\n        Node head = new Node(5, new Node(2, new Node(8, null)));\n        Node current = head;\n        int total = 0;\n        while (current != null) {\n            total += current.value;\n            current = current.next;\n        }\n        System.out.println(total);\n    }\n}",
+      "explanation": "Traversal adds 5, then 2, then 8. Visiting n existing nodes takes O(n) time and O(1) traversal space; constructing the example list uses O(n) storage.",
+      "quiz": {
+        "question": "What marks the end of this singly linked list?",
+        "choices": [
+          "A value of zero",
+          "A negative index",
+          "A null next reference",
+          "A repeated value"
+        ],
+        "answer": 2,
+        "explanation": "A node with no next node points to None in Python or null in Java."
+      }
+    }
+  },
+  {
+    "id": "recursion",
+    "title": "Recursion",
+    "level": "Core",
+    "summary": "Solve a smaller version of a problem until a base case.",
+    "lesson": "Recursion happens when a function calls itself. A correct recursive solution needs a base case that returns directly and a recursive step that moves toward that base case. Think of each call as a separate workspace with its own local variables. When a deeper call returns, the previous call resumes and uses that returned value. Draw a short chain of calls before trying a large input. Recursive code can be elegant for trees and branching structures, but every active call consumes stack space. An algorithm with only a few lines can still use substantial memory or repeat work. Python and Java both have practical recursion-depth limits, so use small inputs for these introductory examples. If a simple loop solves a long linear process, it is often the safer production choice.",
+    "python": "def digit_sum(number):\n    if number < 10:\n        return number\n    return number % 10 + digit_sum(number // 10)\n\nprint(digit_sum(4072))",
+    "java": "public class Main {\n    static int digitSum(int number) {\n        if (number < 10) return number;\n        return number % 10 + digitSum(number / 10);\n    }\n    public static void main(String[] args) {\n        System.out.println(digitSum(4072));\n    }\n}",
+    "problem": {
+      "title": "Digit sum",
+      "prompt": "Write a recursive function that sums the decimal digits of a nonnegative integer. Print the result for 4072. Restrict this exercise to values from 0 through 1,000,000,000.",
+      "input": "number = 4072",
+      "output": "13",
+      "hints": [
+        "A number below 10 is already its own digit sum.",
+        "The final digit is number % 10.",
+        "Remove the final digit using integer division by 10."
+      ],
+      "python": "def digit_sum(number):\n    if number < 10:\n        return number\n    return number % 10 + digit_sum(number // 10)\n\nprint(digit_sum(4072))",
+      "java": "public class Main {\n    static int digitSum(int number) {\n        if (number < 10) return number;\n        return number % 10 + digitSum(number / 10);\n    }\n    public static void main(String[] args) {\n        System.out.println(digitSum(4072));\n    }\n}",
+      "explanation": "The calls separate 2, 7, 0, and 4, then add them to obtain 13. For d digits, time and call-stack space are O(d).",
+      "quiz": {
+        "question": "What makes the recursive calls eventually stop?",
+        "choices": [
+          "The number loses one decimal digit each time",
+          "The function has a short name",
+          "The result is printed",
+          "All recursive functions stop automatically"
+        ],
+        "answer": 0,
+        "explanation": "Integer division by ten shrinks the nonnegative input until the base case is reached."
+      }
+    }
+  },
+  {
+    "id": "trees",
+    "title": "Binary Trees",
+    "level": "Advanced",
+    "summary": "Combine answers from left and right subtrees.",
+    "lesson": "A tree organizes nodes hierarchically. A binary-tree node has at most two children, usually called left and right. The root is the entry point, and a leaf has no children. Trees naturally support recursive reasoning: solve a problem for each child subtree, then combine those answers at the current node. Always define the empty-tree result first. For height measured in nodes, an empty tree has height zero and a leaf has height one. Some resources measure height in edges instead, so clarify the convention before comparing answers. A binary tree is not necessarily a binary search tree; ordinary binary-tree values have no required ordering. Visiting every node takes O(n) time. Recursive traversal uses O(h) call-stack space, where h is the height, which can be n for a chain-shaped tree.",
+    "python": "class Node:\n    def __init__(self, value, left=None, right=None):\n        self.value = value\n        self.left = left\n        self.right = right\n\ndef height(node):\n    if node is None:\n        return 0\n    return 1 + max(height(node.left), height(node.right))\n\nroot = Node(8, Node(3, Node(1)), Node(10))\nprint(height(root))",
+    "java": "public class Main {\n    static class Node {\n        int value;\n        Node left, right;\n        Node(int value, Node left, Node right) {\n            this.value = value; this.left = left; this.right = right;\n        }\n    }\n    static int height(Node node) {\n        if (node == null) return 0;\n        return 1 + Math.max(height(node.left), height(node.right));\n    }\n    public static void main(String[] args) {\n        Node root = new Node(8, new Node(3, new Node(1, null, null), null), new Node(10, null, null));\n        System.out.println(height(root));\n    }\n}",
+    "problem": {
+      "title": "Tree height",
+      "prompt": "Return a binary tree’s height measured in nodes. The root is 8, its children are 3 and 10, and node 3 has left child 1. An empty tree has height 0.",
+      "input": "tree = 8 with left 3, right 10; 3 has left 1",
+      "output": "3",
+      "hints": [
+        "Return zero for an absent node.",
+        "Compute the height of each child subtree.",
+        "Add one to the larger child height."
+      ],
+      "python": "class Node:\n    def __init__(self, value, left=None, right=None):\n        self.value = value\n        self.left = left\n        self.right = right\n\ndef height(node):\n    if node is None:\n        return 0\n    return 1 + max(height(node.left), height(node.right))\n\nroot = Node(8, Node(3, Node(1)), Node(10))\nprint(height(root))",
+      "java": "public class Main {\n    static class Node {\n        int value;\n        Node left, right;\n        Node(int value, Node left, Node right) {\n            this.value = value; this.left = left; this.right = right;\n        }\n    }\n    static int height(Node node) {\n        if (node == null) return 0;\n        return 1 + Math.max(height(node.left), height(node.right));\n    }\n    public static void main(String[] args) {\n        Node root = new Node(8, new Node(3, new Node(1, null, null), null), new Node(10, null, null));\n        System.out.println(height(root));\n    }\n}",
+      "explanation": "The longest root-to-leaf route is 8 -> 3 -> 1 and contains three nodes. Time O(n), stack space O(h).",
+      "quiz": {
+        "question": "With this height convention, what is a leaf’s height?",
+        "choices": [
+          "0",
+          "1",
+          "2",
+          "It depends on the value"
+        ],
+        "answer": 1,
+        "explanation": "A leaf contributes one node above its two empty subtrees."
+      }
+    }
+  },
+  {
+    "id": "heaps",
+    "title": "Heaps & Priority Queues",
+    "level": "Advanced",
+    "summary": "Repeatedly retrieve the smallest available value.",
+    "lesson": "A heap maintains a partial ordering that makes its highest-priority element easy to retrieve. A min-heap exposes the smallest value, but its remaining elements are not necessarily fully sorted. Python’s heapq operates on a list, and Java’s PriorityQueue is a min-priority queue by default for integers. Insertion and removal of the minimum take O(log n) time. Looking at the minimum without removing it is O(1). Python can turn a list into a heap with heapify in O(n) time. Heaps are useful when priorities change or when you repeatedly need only the next smallest candidate rather than an entirely sorted sequence. Never assume that iterating over a heap returns sorted values. Check that it is nonempty before removing an element, and define whether equal values count as separate entries.",
+    "python": "import heapq\n\nweights = [8, 3, 6, 3, 10]\nheap = weights.copy()\nheapq.heapify(heap)\nheapq.heappop(heap)\nprint(heapq.heappop(heap))",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        int[] weights = {8, 3, 6, 3, 10};\n        java.util.PriorityQueue<Integer> heap = new java.util.PriorityQueue<>();\n        for (int weight : weights) heap.add(weight);\n        heap.remove();\n        System.out.println(heap.remove());\n    }\n}",
+    "problem": {
+      "title": "Second smallest parcel",
+      "prompt": "Find the second-smallest value in [8, 3, 6, 3, 10] using a min-heap. Duplicates count separately. Assume the sequence contains at least two values.",
+      "input": "weights = [8, 3, 6, 3, 10]",
+      "output": "3",
+      "hints": [
+        "Put all values into a min-heap.",
+        "Remove the smallest once.",
+        "The next removal is the second smallest, including duplicates."
+      ],
+      "python": "import heapq\n\nweights = [8, 3, 6, 3, 10]\nheap = weights.copy()\nheapq.heapify(heap)\nheapq.heappop(heap)\nprint(heapq.heappop(heap))",
+      "java": "public class Main {\n    public static void main(String[] args) {\n        int[] weights = {8, 3, 6, 3, 10};\n        java.util.PriorityQueue<Integer> heap = new java.util.PriorityQueue<>();\n        for (int weight : weights) heap.add(weight);\n        heap.remove();\n        System.out.println(heap.remove());\n    }\n}",
+      "explanation": "The ordered values start 3, 3, so the second removal returns 3. Python heap construction plus two removals is O(n); this Java version inserts individually, giving O(n log n) worst-case time. Both use O(n) extra space.",
+      "quiz": {
+        "question": "Does iterating over a heap guarantee sorted order?",
+        "choices": [
+          "Yes, always ascending",
+          "Yes, always descending",
+          "Only when values repeat",
+          "No; repeatedly removing the minimum gives sorted order"
+        ],
+        "answer": 3,
+        "explanation": "The heap property guarantees the minimum at the root, not a complete ordering of its storage."
+      }
+    }
+  },
+  {
+    "id": "graphs",
+    "title": "Graphs & Breadth-First Search",
+    "level": "Advanced",
+    "summary": "Explore connections in layers to find shortest unweighted routes.",
+    "lesson": "A graph consists of vertices and edges connecting them. Unlike a tree, a graph can contain cycles, multiple routes, and disconnected components. An adjacency list records the neighbors of each vertex and is a practical representation for sparse graphs. Breadth-first search uses a queue to visit vertices in layers: first the start, then vertices one edge away, then two edges away. In an unweighted graph, the first discovered route to a vertex uses the fewest edges. Mark vertices as discovered when adding them to the queue, not when removing them, to prevent repeated enqueues. Store a distance for each discovered vertex and a sentinel for the rest. With adjacency lists, breadth-first search takes O(V + E) time and O(V) auxiliary space. Weighted edges require a different shortest-path strategy.",
+    "python": "from collections import deque\n\ngraph = [[1, 2], [0, 3], [0, 3], [1, 2, 4], [3]]\ndistance = [-1] * len(graph)\ndistance[0] = 0\nqueue = deque([0])\nwhile queue:\n    node = queue.popleft()\n    for neighbor in graph[node]:\n        if distance[neighbor] == -1:\n            distance[neighbor] = distance[node] + 1\n            queue.append(neighbor)\nprint(distance[4])",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        int[][] graph = {{1, 2}, {0, 3}, {0, 3}, {1, 2, 4}, {3}};\n        int[] distance = new int[graph.length];\n        java.util.Arrays.fill(distance, -1);\n        distance[0] = 0;\n        java.util.Queue<Integer> queue = new java.util.ArrayDeque<>();\n        queue.add(0);\n        while (!queue.isEmpty()) {\n            int node = queue.remove();\n            for (int neighbor : graph[node]) {\n                if (distance[neighbor] == -1) {\n                    distance[neighbor] = distance[node] + 1;\n                    queue.add(neighbor);\n                }\n            }\n        }\n        System.out.println(distance[4]);\n    }\n}",
+    "problem": {
+      "title": "Fewest trail segments",
+      "prompt": "Find the fewest edges from vertex 0 to vertex 4 in an undirected, unweighted graph with edges (0,1), (0,2), (1,3), (2,3), and (3,4). Return -1 when unreachable.",
+      "input": "vertices = 5, edges = [(0,1), (0,2), (1,3), (2,3), (3,4)], start = 0, goal = 4",
+      "output": "3",
+      "hints": [
+        "Use a queue beginning with vertex 0.",
+        "Record a neighbor’s distance as current distance + 1.",
+        "Only enqueue vertices whose distance is still -1."
+      ],
+      "python": "from collections import deque\n\ngraph = [[1, 2], [0, 3], [0, 3], [1, 2, 4], [3]]\ndistance = [-1] * len(graph)\ndistance[0] = 0\nqueue = deque([0])\nwhile queue:\n    node = queue.popleft()\n    for neighbor in graph[node]:\n        if distance[neighbor] == -1:\n            distance[neighbor] = distance[node] + 1\n            queue.append(neighbor)\nprint(distance[4])",
+      "java": "public class Main {\n    public static void main(String[] args) {\n        int[][] graph = {{1, 2}, {0, 3}, {0, 3}, {1, 2, 4}, {3}};\n        int[] distance = new int[graph.length];\n        java.util.Arrays.fill(distance, -1);\n        distance[0] = 0;\n        java.util.Queue<Integer> queue = new java.util.ArrayDeque<>();\n        queue.add(0);\n        while (!queue.isEmpty()) {\n            int node = queue.remove();\n            for (int neighbor : graph[node]) {\n                if (distance[neighbor] == -1) {\n                    distance[neighbor] = distance[node] + 1;\n                    queue.add(neighbor);\n                }\n            }\n        }\n        System.out.println(distance[4]);\n    }\n}",
+      "explanation": "One shortest route is 0 -> 1 -> 3 -> 4, using three edges. BFS finds layers of distances 0, 1, 2, and 3. Time O(V + E), extra space O(V).",
+      "quiz": {
+        "question": "When should a vertex be marked discovered?",
+        "choices": [
+          "When it is first enqueued",
+          "Only after every neighbor is removed",
+          "After the search finishes",
+          "Never, if the graph is undirected"
+        ],
+        "answer": 0,
+        "explanation": "Marking on enqueue prevents duplicate work when multiple vertices discover the same neighbor."
+      }
+    }
+  },
+  {
+    "id": "greedy",
+    "title": "Greedy Algorithms",
+    "level": "Advanced",
+    "summary": "Make a local choice and justify why it preserves the best answer.",
+    "lesson": "A greedy algorithm commits to a locally attractive choice without exploring every alternative. That can be efficient, but the choice must be justified: a rule that feels sensible is not automatically correct. For selecting the maximum number of non-overlapping intervals, choose the interval with the earliest finish time, then repeat among compatible intervals. Finishing early leaves as much room as possible for future choices. An exchange argument explains why this works: replacing an optimal solution’s first interval with the earliest-finishing one cannot reduce the room available afterward. Define endpoint behavior carefully; here an interval ending at time t is compatible with one starting at t. Sorting dominates the runtime at O(n log n). Greedy approaches do not solve every scheduling or optimization problem, especially when intervals have unequal rewards.",
+    "python": "workshops = [(1, 3), (2, 5), (3, 4), (4, 7), (6, 8)]\nworkshops.sort(key=lambda interval: interval[1])\nlast_end = None\ncount = 0\nfor start, end in workshops:\n    if last_end is None or start >= last_end:\n        count += 1\n        last_end = end\nprint(count)",
+    "java": "public class Main {\n    public static void main(String[] args) {\n        int[][] workshops = {{1, 3}, {2, 5}, {3, 4}, {4, 7}, {6, 8}};\n        java.util.Arrays.sort(workshops, (a, b) -> Integer.compare(a[1], b[1]));\n        int lastEnd = Integer.MIN_VALUE;\n        int count = 0;\n        for (int[] workshop : workshops) {\n            if (workshop[0] >= lastEnd) {\n                count++;\n                lastEnd = workshop[1];\n            }\n        }\n        System.out.println(count);\n    }\n}",
+    "problem": {
+      "title": "Maximum workshops",
+      "prompt": "Choose the maximum number of non-overlapping workshops from [(1,3), (2,5), (3,4), (4,7), (6,8)]. Each pair is (start, end), with start < end. Touching endpoints are allowed. Print the count.",
+      "input": "workshops = [(1,3), (2,5), (3,4), (4,7), (6,8)]",
+      "output": "3",
+      "hints": [
+        "Sort by ending time.",
+        "Accept a workshop if its start is at least the previous selected end.",
+        "Track only the count and the most recent finish."
+      ],
+      "python": "workshops = [(1, 3), (2, 5), (3, 4), (4, 7), (6, 8)]\nworkshops.sort(key=lambda interval: interval[1])\nlast_end = None\ncount = 0\nfor start, end in workshops:\n    if last_end is None or start >= last_end:\n        count += 1\n        last_end = end\nprint(count)",
+      "java": "public class Main {\n    public static void main(String[] args) {\n        int[][] workshops = {{1, 3}, {2, 5}, {3, 4}, {4, 7}, {6, 8}};\n        java.util.Arrays.sort(workshops, (a, b) -> Integer.compare(a[1], b[1]));\n        int lastEnd = Integer.MIN_VALUE;\n        int count = 0;\n        for (int[] workshop : workshops) {\n            if (workshop[0] >= lastEnd) {\n                count++;\n                lastEnd = workshop[1];\n            }\n        }\n        System.out.println(count);\n    }\n}",
+      "explanation": "Select (1,3), then (3,4), then (4,7), giving three workshops. Earliest finishing choices leave room for later intervals. Time O(n log n); the library sorting implementations may use O(n) auxiliary space.",
+      "quiz": {
+        "question": "Which greedy choice is justified for maximizing the interval count?",
+        "choices": [
+          "Earliest start",
+          "Longest duration",
+          "Earliest finish among remaining compatible intervals",
+          "Largest end time"
+        ],
+        "answer": 2,
+        "explanation": "The earliest finish leaves the most remaining time and supports an exchange argument."
+      }
+    }
+  },
+  {
+    "id": "dynamic-programming",
+    "title": "Dynamic Programming",
+    "level": "Advanced",
+    "summary": "Reuse smaller answers instead of solving them repeatedly.",
+    "lesson": "Dynamic programming solves a problem by storing answers to overlapping subproblems. Begin by defining the state in a complete sentence, then derive a transition and establish base cases. For counting staircase routes with steps of size one or two, let dp[i] mean the number of routes to step i. Every route ends with either a one-step move from i-1 or a two-step move from i-2, so their counts add. These two groups do not overlap. Set dp[0] to one because there is one empty route that stays at the ground. A bottom-up table fills smaller states before larger ones. This avoids the repeated calls of a naive recursive solution. Count problems can quickly exceed fixed-width integer ranges, so keep bounds explicit or use larger numeric types when necessary.",
+    "python": "def route_count(n):\n    dp = [0] * (n + 1)\n    dp[0] = 1\n    if n >= 1:\n        dp[1] = 1\n    for i in range(2, n + 1):\n        dp[i] = dp[i - 1] + dp[i - 2]\n    return dp[n]\n\nprint(route_count(5))",
+    "java": "public class Main {\n    static int routeCount(int n) {\n        int[] dp = new int[n + 1];\n        dp[0] = 1;\n        if (n >= 1) dp[1] = 1;\n        for (int i = 2; i <= n; i++) {\n            dp[i] = dp[i - 1] + dp[i - 2];\n        }\n        return dp[n];\n    }\n    public static void main(String[] args) {\n        System.out.println(routeCount(5));\n    }\n}",
+    "problem": {
+      "title": "Staircase route count",
+      "prompt": "Count distinct ordered routes to step n when each move climbs 1 or 2 steps. Use dynamic programming and print the result for n = 5. Limit n to 0 through 40.",
+      "input": "n = 5",
+      "output": "8",
+      "hints": [
+        "Let dp[i] count routes to step i.",
+        "Use dp[0] = 1 and dp[1] = 1 when present.",
+        "For i >= 2, add dp[i-1] and dp[i-2]."
+      ],
+      "python": "def route_count(n):\n    dp = [0] * (n + 1)\n    dp[0] = 1\n    if n >= 1:\n        dp[1] = 1\n    for i in range(2, n + 1):\n        dp[i] = dp[i - 1] + dp[i - 2]\n    return dp[n]\n\nprint(route_count(5))",
+      "java": "public class Main {\n    static int routeCount(int n) {\n        int[] dp = new int[n + 1];\n        dp[0] = 1;\n        if (n >= 1) dp[1] = 1;\n        for (int i = 2; i <= n; i++) {\n            dp[i] = dp[i - 1] + dp[i - 2];\n        }\n        return dp[n];\n    }\n    public static void main(String[] args) {\n        System.out.println(routeCount(5));\n    }\n}",
+      "explanation": "The table for steps 0 through 5 is [1, 1, 2, 3, 5, 8]. Each state is computed once: O(n) time and O(n) extra space. Keeping just the previous two counts would reduce extra space to O(1).",
+      "quiz": {
+        "question": "Why does dp[i-1] + dp[i-2] count all routes?",
+        "choices": [
+          "Every route ends with exactly one of the two allowed move sizes",
+          "It sorts the routes",
+          "All routes have the same number of moves",
+          "It eliminates the need for base cases"
+        ],
+        "answer": 0,
+        "explanation": "Partition routes by their final move: a 1-step move or a 2-step move. Each group corresponds to a smaller state."
+      }
+    }
+  }
+]
