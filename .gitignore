@@ -1,0 +1,49 @@
+# Keep dist/: this repository uses its top-level files as frontend source.
+# Keep dist/server/index.js too: it is the generated, deployable Worker bundle.
+
+# Installed dependencies and package-manager caches
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/cache/
+
+# Credentials and local environment overrides
+.env
+.env.*
+!.env.example
+!.env.sample
+.dev.vars
+.dev.vars.*
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local cloud/emulator state, databases, user uploads, and browser data
+.wrangler/
+.data/
+.local/
+uploads/
+profile-photos/
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+*.sqlite-shm
+*.sqlite-wal
+
+# Logs, test outputs, and local editor/OS files
+*.log
+coverage/
+test-results/
+playwright-report/
+tests/fixtures/stored/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo

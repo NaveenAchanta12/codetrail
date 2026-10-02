@@ -1,0 +1,1 @@
+ALTER TABLE `learner_preferences` ADD `preference_rev` integer DEFAULT 0 NOT NULL;

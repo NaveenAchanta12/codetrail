@@ -1,0 +1,1 @@
+ALTER TABLE `learner_preferences` ADD `photo_rev` integer DEFAULT 0 NOT NULL;

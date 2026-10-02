@@ -1,0 +1,1 @@
+ALTER TABLE `learner_preferences` ADD `rec_epoch` integer DEFAULT 0 NOT NULL;

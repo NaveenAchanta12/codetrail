@@ -1,0 +1,82 @@
+{
+  "clean.png": {
+    "should_accept_after_sanitize": true,
+    "has_metadata": false
+  },
+  "icc.png": {
+    "should_accept_after_sanitize": true,
+    "has_metadata": true
+  },
+  "oversize-dimensions.png": {
+    "should_accept_after_sanitize": false,
+    "has_metadata": false
+  },
+  "alpha-icc.png": {
+    "should_accept_after_sanitize": true,
+    "has_metadata": true
+  },
+  "animated.png": {
+    "should_accept_after_sanitize": false,
+    "has_metadata": false
+  },
+  "truncated.png": {
+    "should_accept_after_sanitize": false,
+    "has_metadata": false
+  },
+  "trailing.png": {
+    "should_accept_after_sanitize": false,
+    "has_metadata": false
+  },
+  "clean.webp": {
+    "should_accept_after_sanitize": true,
+    "has_metadata": false
+  },
+  "icc.webp": {
+    "should_accept_after_sanitize": true,
+    "has_metadata": true
+  },
+  "oversize-dimensions.webp": {
+    "should_accept_after_sanitize": false,
+    "has_metadata": false
+  },
+  "alpha-icc.webp": {
+    "should_accept_after_sanitize": true,
+    "has_metadata": true
+  },
+  "animated.webp": {
+    "should_accept_after_sanitize": false,
+    "has_metadata": false
+  },
+  "truncated.webp": {
+    "should_accept_after_sanitize": false,
+    "has_metadata": false
+  },
+  "trailing.webp": {
+    "should_accept_after_sanitize": false,
+    "has_metadata": false
+  },
+  "alpha-lossless-icc.webp": {
+    "should_accept_after_sanitize": true,
+    "has_metadata": true
+  },
+  "private-metadata.png": {
+    "should_accept_after_sanitize": true,
+    "has_metadata": true
+  },
+  "private-metadata.webp": {
+    "should_accept_after_sanitize": true,
+    "has_metadata": true
+  },
+  "unknown-critical.png": {
+    "should_accept_after_sanitize": false,
+    "has_metadata": false
+  },
+  "missing-image.png": {
+    "should_accept_after_sanitize": false,
+    "has_metadata": false
+  },
+  "oversize-bytes.png": {
+    "should_accept_after_sanitize": false,
+    "has_metadata": false
+  }
+}
