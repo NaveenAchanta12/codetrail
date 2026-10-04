@@ -1,105 +1,102 @@
 # CodeTrail
 
-CodeTrail is a browser-based learning app with Python and Java lessons, an AI academy, practice tasks, account progress, study rooms, learner discovery, and an optional on-device AI tutor.
+**An interactive coding academy that runs in the browser** — Python & Java lessons with real code execution, AI courses, study rooms, and an on-device AI tutor.
 
-This source export starts from deployed commit `bfb376f05ce166b5b9d72cb1c123978dddb8338e`. It includes every tracked application file from that snapshot, documentation, and portable regression tests. It does not include the original Git history, installed dependencies, credentials, live database records, uploaded profile photos, or browser state. Application features have not been changed for this export.
+🌐 **Live demo:** [www.swotandstudy.com](https://www.swotandstudy.com)
 
-## Important: `dist/` contains source
+![Demo](https://img.shields.io/badge/demo-live_@_swotandstudy.com-blue)
+![Cloudflare Workers](https://img.shields.io/badge/backend-Cloudflare_Workers-F38020)
+![Tests](https://img.shields.io/badge/tests-139_passing-brightgreen)
 
-This project does **not** have a separate `src/` frontend tree. Most files directly inside `dist/` are the editable HTML, CSS, JavaScript, course JSON, and image assets. Keep them in version control; do not delete or ignore the whole directory.
+## What it is
 
-`dist/server/index.js` is a generated Worker bundle and is also included. `build.mjs` combines `server/*.mjs`, course metadata, and the supported top-level files in `dist/` into that one module. Edit frontend files and backend modules, then rebuild. Avoid editing the generated Worker directly because the next build overwrites it.
+CodeTrail is a full-stack learning platform I built and host myself: write Python that actually executes in the browser, work through AI courses with graded checkpoints, collaborate in study rooms with shared editors, and get help from an AI tutor — no installs, no setup.
 
-The asset packer recognizes HTML, CSS, JS, JSON, WebP, and PNG. It scans the top level of `dist/`, not nested asset directories.
+## Features
 
-## Local setup and checks
+### 📚 Learn
+- **48 Python lessons** across 16 modules — write and run Python **in the browser** (Pyodide via WebAssembly, off the main thread in a Web Worker), with practice tests, progressive hints, stop control, and execution timeouts
+- **18 Java lessons** — editor with line numbers and indentation, download `Main.java` (no in-browser JVM)
+- **6 AI academy courses** (AI Foundations → Reliable AI Systems) with checkpoints, practical tasks, XP, levels, and achievements
 
-Use Node.js 24 or newer for the included test harness, which uses the built-in `node:sqlite` module. The export was checked with Node.js 24.19.0. SQLite may produce an experimental-feature warning on some Node versions.
+### 🤖 AI
+- Site assistant and lesson tutor powered by **GPT-4.1 mini** (OpenAI Responses API)
+- Grounded in course content, your editor code, and console errors — suggested fixes come with Apply/Undo that never overwrites newer edits
+- Concept-only help during quizzes; AI pauses during timed no-run mocks
+- Optional **on-device tutor** (WebLLM + Qwen2.5-Coder) — runs on your GPU, no API key needed
+- AI spend is guarded by atomic cost reservations against a shared monthly budget, with per-user and site-wide daily caps
 
-```sh
-npm ci
-npm run build
-node tests/run.mjs
+### 👥 Community
+- Study rooms with shared code editors (saved-edit collaboration with revision-based sync)
+- Learner directory, connections, blocking/reporting, and recommendations
+- Course communities and discussions
+
+### 🔐 Login & security
+- Google OpenID Connect (authorization-code flow + PKCE, ID-token signature verification)
+- Expiring server-side sessions, secure cookies, revocation on logout
+- Same-origin/CSRF checks, safe redirects, private-cache controls
+- **Quiz answer keys live server-side** — the browser never receives them
+
+## Tech stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | HTML5, custom CSS, vanilla JavaScript — no framework |
+| Backend | Cloudflare Workers (JavaScript ES modules, custom `Request`/`Response` routing) |
+| Database | Cloudflare D1 (SQLite) + Drizzle ORM & SQL migrations |
+| Auth | Google OpenID Connect + PKCE |
+| AI | OpenAI Responses API (GPT-4.1 mini); WebLLM for the on-device tutor |
+| Code execution | Pyodide (Python via WebAssembly in a dedicated Web Worker) |
+| Photos | Browser canvas pipeline (crop/resize → WebP thumbnails, HEIC support) → D1 BLOB storage |
+| Hosting | Cloudflare Workers + D1, Cloudflare DNS/HTTPS; domain via GoDaddy |
+
+## Architecture
+
+```
+Browser (vanilla JS)
+   │  HTTPS · JSON APIs
+   ▼
+Cloudflare Worker (custom router, ES modules)
+   ├── Google OIDC login (PKCE · server-side sessions · secure cookies)
+   ├── REST APIs: progress · courses · quizzes · profiles · community
+   │               rooms · photos · recommendations · AI
+   └── Cloudflare D1 (SQLite): progress, drafts, quiz results,
+       profiles, rooms, messages, sessions, photos, AI usage
 ```
 
-- `npm ci` installs the dependencies pinned in `package-lock.json`.
-- `npm run build` runs the existing dependency-free Node asset packer. It can also run before installation.
-- `node tests/run.mjs` performs syntax and JSON checks, verifies the generated bundle matches its inputs, and runs five offline regression suites. It needs no npm dependencies, live accounts, or cloud credentials.
-- `npm run db:generate` generates Drizzle migrations from `db/schema.ts`. Review generated SQL before applying it. This command generates migration files; it does not deploy or apply them.
+Prepared SQL statements and atomic operations throughout; revision checks handle concurrent saves. No vector database or embeddings pipeline — the tutor is grounded in supplied course context.
 
-There is no `npm start`, local production-auth server, Wrangler configuration, or automated GitHub deployment workflow in this snapshot. Cloning the repository and running the build does not create a running authenticated service.
+## Local development
 
-For a **local, visual-only** preview, Python can serve the frontend:
+Prerequisites: Node.js 24+, npm, and [Wrangler](https://developers.cloudflare.com/workers/wrangler/).
 
 ```sh
-python3 -m http.server 8000 --bind 127.0.0.1 --directory dist
+npm ci              # install pinned dependencies
+npx wrangler dev    # local Worker runtime with D1
+node --test         # run the test suite
 ```
 
-Open `http://127.0.0.1:8000/`. This static preview does not implement clean-URL routing, sign-in, protected-page enforcement, API endpoints, database operations, or uploads. Page layouts at their `.html` paths can be inspected, but account-dependent content may fail to load. Do not use a plain static server as the production deployment.
+Database migrations are generated with Drizzle (`drizzle-kit generate`) and applied in filename order. Python is used only for secure setup helpers — it is not the website's backend.
 
-## Repository map
+## Testing
 
-- `dist/index.html`, `home.js`, `home.css`: public landing page
-- `dist/learn.html`, `app.js`, course JSON, `python-worker.js`: Python/Java lessons and practice
-- `dist/hub.html`, `hub.js`: dashboard, catalog, progress, and profile views
-- `dist/academy.html`, `academy.js`, `academy-courses.json`: academy courses, tasks, achievements, and memory
-- `dist/community.html`, `community.js`, `split-editors.js`, `study-learning.js`: course communities and shared study rooms
-- `dist/people.html`, `people.js`, `learner-features.js`: learner directory, preferences, recommendations, and profile-photo processing
-- `dist/tutor.js`, `ai-worker.js`, `memory-client.js`: on-device tutor and optional account-backed chat memory
-- `server/progress.mjs`: progress validation and optimistic-concurrency storage
-- `server/academy.mjs`: academy state, grading, points, tasks, and memory
-- `server/community.mjs`: enrollment, connections, room membership, messaging, moderation, and room focus
-- `server/buffers.mjs`: per-learner study buffers and explicit sharing/edit permissions
-- `server/learners.mjs`: directory/privacy preferences, recommendations, and profile photos
-- `db/schema.ts`: Drizzle SQLite schema
-- `drizzle/`: ordered SQL migrations `0000` through `0010` and Drizzle snapshot metadata
-- `build.mjs`: asset packer and Worker route assembly
-- `.openai/hosting.json`: existing Sites project association and resource-binding names
-- `tests/`: portable regression tests with generated, non-user image fixtures
+**139 passing tests** covering authentication/session handling, API authorization, database operations, quiz grading, photo validation, and Cloudflare-runtime regressions — run with Node's built-in test runner. No live credentials required.
 
-## Hosting and authentication dependencies
+## Project structure
 
-The original deployment runs on OpenAI Sites with a Workers-style module entry point: `dist/server/index.js` exports an object with `fetch(request, env)`.
+```
+├── dist/       # frontend: HTML pages, vanilla JS, CSS, course JSON, WebP artwork
+├── server/     # Worker modules: progress, academy, community, learners, buffers
+├── db/         # Drizzle schema (SQLite)
+├── drizzle/    # ordered SQL migrations
+├── tests/      # Node test suites
+└── build.mjs   # custom asset packer → Worker bundle
+```
 
-The Worker expects the hosting platform to provide:
+## What this project deliberately avoids
 
-1. **Trusted authentication.** A successful request carries `oai-authenticated-user-id`, injected by the platform. The frontend links to `/signin-with-chatgpt` and `/signout-with-chatgpt`; these routes are platform-managed and are not implemented in this repository.
-2. **`env.DB`.** A D1-compatible SQLite binding with `prepare`, bound statements (`first`, `all`, `run`), and `batch` behavior. The SQL uses features including `RETURNING`, conflict handling, and common table expressions.
-3. **`env.FILES`.** An R2-compatible object-storage binding with `put`, `get`, and `delete` for profile photos. Returned objects expose a readable `body`.
-4. **Web runtime APIs.** `Request`, `Response`, streams, `TextEncoder`, `TextDecoder`, `crypto.subtle`, `crypto.randomUUID`, and base64 helpers.
+No React/Next.js/Vue, no Monaco/CodeMirror, no Docker/Kubernetes, no AWS/Terraform/Redis, no PostgreSQL/MongoDB/Prisma, no GitHub Actions deploy pipeline. The whole platform runs on the stack above.
 
-`.openai/hosting.json` is preserved as part of the original source. Its project ID identifies the existing deployment; it is not a credential. Reassociate it through your supported Sites workflow before deploying a separate copy. Do not assume that pushing this repository to GitHub updates or creates a Site.
+## Legacy version
 
-To host elsewhere, first supply real authentication and login/logout routes, configure equivalent database/object-storage bindings, and adapt the platform integration. **Never trust a browser-supplied `oai-authenticated-user-id` header.** A production gateway must strip or reject an incoming spoofed header and derive identity from a verified session before passing it to the Worker. The test harness injects synthetic identities directly solely to exercise authorization logic in isolation; it does not provide or validate production authentication.
-
-Mutating API requests enforce same-origin checks and bind writes to the signed-in account or room permissions. Keep the frontend and API on the same origin unless you deliberately redesign those checks.
-
-## Database setup and data boundaries
-
-For a fresh environment, apply every `drizzle/*.sql` migration in filename order, beginning with `0000_bizarre_miracleman.sql` and ending with `0010_illegal_paladin.sql`, using the target platform's migration mechanism. Preserve the `drizzle/meta/` files for future schema generation. On an existing database, apply only pending migrations using its migration history; do not blindly replay them. Back up persistent data before schema changes.
-
-The database contains progress, academy state, learner preferences, recommendations, enrollments, connections, rooms/membership, messages/reports/blocks, editor buffers/permissions, and shared lesson focus. Photos live in object storage. Live rows and uploaded objects are intentionally absent from this code export. `/api/health` checks access to the progress table only; it is not a full database, storage, or authentication health check.
-
-## Browser features and external resources
-
-- Python execution uses Pyodide in a browser Worker, loaded from the pinned CDN URL in `dist/python-worker.js`. First use requires network access and downloads the runtime. Interactive `input()` is unsupported.
-- Java is an editor/download workflow. The app does not include an in-browser JVM; downloaded Java files require a local JDK.
-- The optional tutor uses WebLLM and a Qwen2.5-Coder model on the user's device. It needs WebGPU, a compatible browser/GPU, sufficient memory, and network access to download runtime/model files. It is not a server-side OpenAI API integration; no OpenAI API key is required by this source.
-- HEIC photo conversion may dynamically load `heic-to` from a pinned jsDelivr URL. Native decoding support varies by browser.
-- Google Fonts and the linked learning references require their respective external services.
-
-Those remote runtimes, model weights, fonts, and referenced articles are not vendored in the export. Their upstream availability, terms, and licenses still apply. Optional chat memory stores conversations in account-backed state when enabled, even though model generation itself runs locally.
-
-## Regression coverage and limits
-
-Run all checks with `node tests/run.mjs`, or an individual suite with `node tests/<name>.mjs`:
-
-- `community-security.mjs`: authentication gates, membership/roles, origin checks, revision conflicts, route protection, and draft preservation
-- `study-buffers.mjs`: private/shared editor access, grants/revocations, membership races, and bundled API routing
-- `room-focus.mjs`: host-only lesson/challenge focus, course boundaries, write-time races, and valid lesson coverage
-- `learner-photos.mjs`: directory/privacy controls, opt-in recommendation behavior, concurrent changes, upload validation, and metadata stripping
-- `prepare-photo.mjs`: browser-side image-preparation logic using mocked image/canvas APIs
-
-The suites use in-memory SQLite and mock object storage. The image fixtures are generated test images, including intentionally malformed cases and metadata sentinels. They contain no uploaded learner photos. Regenerating them is optional and requires Python with Pillow: `python3 tests/fixtures/generate-fixtures.py`.
-
-Passing these tests is not an end-to-end verification of Sites sign-in, a deployed D1/R2 environment, WebGPU/model loading, real browser HEIC decoding, accessibility, or visual layout. Deployment and real-browser checks remain necessary after any future changes.
+The original ChatGPT Sites build is preserved at [legacy.swotandstudy.com](https://legacy.swotandstudy.com). The current app is an independent Cloudflare Workers rebuild with Google login and D1 storage.
